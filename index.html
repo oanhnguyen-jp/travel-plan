@@ -1,486 +1,1110 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Japan Experience Proposal</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tamachi Guide</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background:#f5f5f5;
+    color:#111;
+    overflow-x:hidden;
+    line-height:1.6;
+}
+
+/* LOADING */
+
+.loader{
+    position:fixed;
+    inset:0;
+    background:#111;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:1s;
+}
+
+.loader.hidden{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-circle{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    border:4px solid rgba(255,255,255,0.2);
+    border-top:4px solid #ff3b30;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
     }
+}
 
-    body{
-      font-family:'Poppins',sans-serif;
-      background:#0f1115;
-      color:white;
-      line-height:1.7;
+/* BACKGROUND BLOBS */
+
+.blob{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(90px);
+    z-index:-1;
+    opacity:0.35;
+    animation:float 12s infinite ease-in-out;
+}
+
+.blob1{
+    width:350px;
+    height:350px;
+    background:#ff4d4d;
+    top:-100px;
+    left:-100px;
+}
+
+.blob2{
+    width:300px;
+    height:300px;
+    background:#d1d1d1;
+    right:-100px;
+    top:400px;
+    animation-delay:3s;
+}
+
+.blob3{
+    width:250px;
+    height:250px;
+    background:#ff8a80;
+    bottom:-100px;
+    left:30%;
+    animation-delay:6s;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0px) translateX(0px);
     }
-
-    a{
-      color:#8ec5ff;
-      text-decoration:none;
+    50%{
+        transform:translateY(-40px) translateX(20px);
     }
+}
 
-    .hero{
-      height:100vh;
-      background:
-        linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.7)),
-        url('https://images.unsplash.com/photo-1549693578-d683be217e58?q=80&w=1600&auto=format&fit=crop');
-      background-size:cover;
-      background-position:center;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:40px;
+/* NAVBAR */
+
+.navbar{
+    position:fixed;
+    top:0;
+    width:100%;
+    z-index:1000;
+    padding:18px 7%;
+    backdrop-filter:blur(20px);
+    background:rgba(255,255,255,0.65);
+    border-bottom:1px solid rgba(255,255,255,0.2);
+}
+
+.nav-container{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:1.5rem;
+    font-weight:800;
+    color:#ff3b30;
+    letter-spacing:1px;
+}
+
+.nav-links{
+    display:flex;
+    gap:28px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#111;
+    font-weight:500;
+    transition:0.3s;
+}
+
+.nav-links a:hover{
+    color:#ff3b30;
+}
+
+.menu-toggle{
+    display:none;
+    flex-direction:column;
+    gap:5px;
+    cursor:pointer;
+}
+
+.menu-toggle span{
+    width:24px;
+    height:2px;
+    background:#111;
+    border-radius:20px;
+}
+
+/* HERO */
+
+.hero{
+    min-height:100vh;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:120px 7%;
+    background:
+    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)),
+    url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1920&auto=format&fit=crop');
+    background-size:cover;
+    background-position:center;
+    overflow:hidden;
+}
+
+.hero-content{
+    max-width:850px;
+    text-align:center;
+    color:white;
+    z-index:2;
+}
+
+.hero h1{
+    font-size:5rem;
+    font-weight:800;
+    line-height:1;
+    margin-bottom:24px;
+    letter-spacing:2px;
+}
+
+.hero p{
+    font-size:1.2rem;
+    color:rgba(255,255,255,0.85);
+    margin-bottom:40px;
+}
+
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    gap:18px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:16px 28px;
+    border-radius:999px;
+    border:none;
+    cursor:pointer;
+    font-size:1rem;
+    font-weight:600;
+    transition:0.4s;
+    text-decoration:none;
+}
+
+.btn-primary{
+    background:linear-gradient(135deg,#ff3b30,#ff6b6b);
+    color:white;
+    box-shadow:0 10px 30px rgba(255,59,48,0.35);
+}
+
+.btn-primary:hover{
+    transform:translateY(-4px) scale(1.02);
+}
+
+.btn-secondary{
+    background:rgba(255,255,255,0.12);
+    color:white;
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,0.15);
+}
+
+.btn-secondary:hover{
+    background:rgba(255,255,255,0.2);
+}
+
+/* GENERAL */
+
+.section{
+    padding:100px 7%;
+}
+
+.section-title{
+    font-size:2.6rem;
+    margin-bottom:16px;
+    font-weight:800;
+}
+
+.section-subtitle{
+    color:#666;
+    margin-bottom:50px;
+}
+
+/* GLASS */
+
+.glass{
+    background:rgba(255,255,255,0.6);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.4);
+    box-shadow:0 15px 40px rgba(0,0,0,0.08);
+}
+
+/* INTRO */
+
+.intro-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:24px;
+}
+
+.intro-card{
+    padding:32px;
+    border-radius:28px;
+    transition:0.4s;
+}
+
+.intro-card:hover{
+    transform:translateY(-8px);
+}
+
+.intro-card h3{
+    margin-bottom:14px;
+    font-size:1.2rem;
+}
+
+.intro-icon{
+    font-size:2rem;
+    margin-bottom:18px;
+}
+
+/* PLACES */
+
+.places-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:28px;
+}
+
+.place-card{
+    border-radius:28px;
+    overflow:hidden;
+    transition:0.4s;
+}
+
+.place-card:hover{
+    transform:translateY(-10px);
+}
+
+.place-image{
+    height:220px;
+    overflow:hidden;
+}
+
+.place-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:0.5s;
+}
+
+.place-card:hover img{
+    transform:scale(1.08);
+}
+
+.place-content{
+    padding:24px;
+}
+
+.badge{
+    display:inline-block;
+    padding:8px 14px;
+    background:#ffe3e3;
+    color:#ff3b30;
+    border-radius:999px;
+    font-size:0.8rem;
+    font-weight:700;
+    margin-bottom:16px;
+}
+
+.place-content h3{
+    margin-bottom:10px;
+    font-size:1.2rem;
+}
+
+.place-meta{
+    display:flex;
+    justify-content:space-between;
+    margin-top:18px;
+    color:#666;
+    font-size:0.9rem;
+}
+
+.stars{
+    color:#ffb400;
+    margin-top:12px;
+}
+
+/* FOOD */
+
+.food-scroll{
+    display:flex;
+    gap:24px;
+    overflow-x:auto;
+    padding-bottom:10px;
+    scroll-snap-type:x mandatory;
+}
+
+.food-scroll::-webkit-scrollbar{
+    height:8px;
+}
+
+.food-scroll::-webkit-scrollbar-thumb{
+    background:#ddd;
+    border-radius:999px;
+}
+
+.food-card{
+    min-width:320px;
+    border-radius:28px;
+    overflow:hidden;
+    scroll-snap-align:start;
+    position:relative;
+}
+
+.food-card img{
+    width:100%;
+    height:420px;
+    object-fit:cover;
+}
+
+.food-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:28px;
+    color:white;
+}
+
+.food-tags{
+    display:flex;
+    gap:10px;
+    margin-top:14px;
+    flex-wrap:wrap;
+}
+
+.food-tags span{
+    background:rgba(255,255,255,0.2);
+    backdrop-filter:blur(8px);
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:0.8rem;
+}
+
+/* WORK LIFE */
+
+.magazine{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:28px;
+}
+
+.mag-left,
+.mag-right{
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+}
+
+.mag-card{
+    border-radius:28px;
+    overflow:hidden;
+    position:relative;
+    min-height:260px;
+}
+
+.mag-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.mag-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+    color:white;
+    padding:28px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+}
+
+/* MAP */
+
+.map-box{
+    padding:40px;
+    border-radius:32px;
+    position:relative;
+    overflow:hidden;
+}
+
+.fake-map{
+    position:relative;
+    height:500px;
+    border-radius:24px;
+    background:
+    linear-gradient(135deg,#ececec,#ffffff);
+    overflow:hidden;
+}
+
+.map-grid{
+    position:absolute;
+    inset:0;
+    background-image:
+    linear-gradient(#ddd 1px, transparent 1px),
+    linear-gradient(90deg,#ddd 1px, transparent 1px);
+    background-size:50px 50px;
+    opacity:0.5;
+}
+
+.pin{
+    position:absolute;
+    width:22px;
+    height:22px;
+    background:#ff3b30;
+    border-radius:50%;
+    box-shadow:0 0 0 12px rgba(255,59,48,0.15);
+    animation:pulse 2s infinite;
+}
+
+.pin::after{
+    content:'';
+    position:absolute;
+    width:10px;
+    height:10px;
+    background:white;
+    border-radius:50%;
+    top:6px;
+    left:6px;
+}
+
+@keyframes pulse{
+    0%{
+        transform:scale(1);
     }
-
-    .hero-content h1{
-      font-size:64px;
-      margin-bottom:20px;
-      font-weight:700;
+    50%{
+        transform:scale(1.15);
     }
-
-    .hero-content p{
-      font-size:22px;
-      opacity:0.9;
+    100%{
+        transform:scale(1);
     }
+}
 
-    .section{
-      padding:80px 8%;
-    }
+/* TIMELINE */
 
-    .section-title{
-      font-size:40px;
-      margin-bottom:50px;
-      font-weight:700;
-    }
+.timeline{
+    position:relative;
+    margin-top:50px;
+}
 
-    .plans{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-      gap:30px;
-    }
+.timeline::before{
+    content:'';
+    position:absolute;
+    left:50%;
+    top:0;
+    width:4px;
+    height:100%;
+    background:#ddd;
+    transform:translateX(-50%);
+}
 
-    .plan-card{
-      background:#171a21;
-      border-radius:24px;
-      overflow:hidden;
-      transition:0.3s;
-      border:1px solid rgba(255,255,255,0.06);
-    }
+.timeline-item{
+    position:relative;
+    width:50%;
+    padding:30px;
+}
 
-    .plan-card:hover{
-      transform:translateY(-8px);
-      box-shadow:0 15px 40px rgba(0,0,0,0.4);
-    }
+.timeline-item:nth-child(odd){
+    left:0;
+}
 
-    .plan-image{
-      height:240px;
-      background-size:cover;
-      background-position:center;
-    }
+.timeline-item:nth-child(even){
+    left:50%;
+}
 
-    .plan-content{
-      padding:28px;
-    }
+.timeline-content{
+    padding:28px;
+    border-radius:28px;
+}
 
-    .plan-content h3{
-      font-size:28px;
-      margin-bottom:14px;
-    }
+.timeline-dot{
+    position:absolute;
+    top:40px;
+    width:22px;
+    height:22px;
+    background:#ff3b30;
+    border-radius:50%;
+}
 
-    .tag{
-      display:inline-block;
-      background:#252a35;
-      padding:8px 14px;
-      border-radius:999px;
-      font-size:13px;
-      margin-bottom:18px;
-    }
+.timeline-item:nth-child(odd) .timeline-dot{
+    right:-11px;
+}
 
-    .highlight-list{
-      margin-top:20px;
-    }
+.timeline-item:nth-child(even) .timeline-dot{
+    left:-11px;
+}
 
-    .highlight-list li{
-      margin-bottom:10px;
-      opacity:0.9;
-    }
+/* FOOTER */
 
-    .timeline{
-      margin-top:30px;
-    }
+footer{
+    padding:60px 7%;
+    background:#111;
+    color:white;
+    text-align:center;
+}
 
-    .day{
-      background:#161922;
-      padding:24px;
-      border-radius:18px;
-      margin-bottom:20px;
-      border-left:4px solid #f7c873;
-    }
+.socials{
+    display:flex;
+    justify-content:center;
+    gap:18px;
+    margin-bottom:20px;
+}
 
-    .day h4{
-      font-size:22px;
-      margin-bottom:12px;
-    }
+.socials a{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.08);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    text-decoration:none;
+    transition:0.3s;
+}
 
-    .activity-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:25px;
-      margin-top:40px;
-    }
+.socials a:hover{
+    background:#ff3b30;
+    transform:translateY(-4px);
+}
 
-    .activity-card{
-      background:#171a21;
-      border-radius:20px;
-      overflow:hidden;
-      transition:0.3s;
-    }
+/* ANIMATION */
 
-    .activity-card:hover{
-      transform:translateY(-6px);
-    }
+.fade-up{
+    opacity:0;
+    transform:translateY(40px);
+    transition:1s;
+}
 
-    .activity-image{
-      height:220px;
-      background-size:cover;
-      background-position:center;
-    }
+.fade-up.active{
+    opacity:1;
+    transform:translateY(0);
+}
 
-    .activity-content{
-      padding:22px;
-    }
+/* MOBILE */
 
-    .activity-content h4{
-      margin-bottom:12px;
-      font-size:22px;
-    }
+@media(max-width:900px){
 
-    .price{
-      margin-top:14px;
-      color:#f7c873;
-      font-weight:600;
-    }
+.hero h1{
+    font-size:3.5rem;
+}
 
-    .comparison{
-      overflow-x:auto;
-    }
+.magazine{
+    grid-template-columns:1fr;
+}
 
-    table{
-      width:100%;
-      border-collapse:collapse;
-      background:#171a21;
-      border-radius:20px;
-      overflow:hidden;
-    }
+.timeline::before{
+    left:20px;
+}
 
-    th, td{
-      padding:22px;
-      text-align:center;
-    }
+.timeline-item{
+    width:100%;
+    left:0 !important;
+    padding-left:60px;
+}
 
-    th{
-      background:#202532;
-      font-size:18px;
-    }
+.timeline-dot{
+    left:10px !important;
+}
 
-    tr:nth-child(even){
-      background:#1c212c;
-    }
+.nav-links{
+    position:absolute;
+    top:80px;
+    right:7%;
+    flex-direction:column;
+    background:white;
+    width:220px;
+    padding:24px;
+    border-radius:24px;
+    display:none;
+    box-shadow:0 20px 40px rgba(0,0,0,0.1);
+}
 
-    .recommend{
-      background:linear-gradient(135deg,#1e2430,#11151c);
-      border-radius:30px;
-      padding:60px;
-      text-align:center;
-      margin-top:50px;
-    }
+.nav-links.active{
+    display:flex;
+}
 
-    .recommend h2{
-      font-size:42px;
-      margin-bottom:25px;
-    }
+.menu-toggle{
+    display:flex;
+}
 
-    .recommend p{
-      max-width:900px;
-      margin:auto;
-      opacity:0.92;
-      font-size:18px;
-    }
+}
 
-    footer{
-      text-align:center;
-      padding:40px;
-      opacity:0.6;
-    }
+@media(max-width:600px){
 
-    @media(max-width:768px){
-      .hero-content h1{
-        font-size:42px;
-      }
+.hero h1{
+    font-size:2.7rem;
+}
 
-      .section-title{
-        font-size:32px;
-      }
-    }
-  </style>
+.section{
+    padding:80px 6%;
+}
+
+.section-title{
+    font-size:2rem;
+}
+
+.hero-buttons{
+    flex-direction:column;
+}
+
+.btn{
+    width:100%;
+}
+
+}
+</style>
 </head>
 
 <body>
 
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Japan Experience Proposal 2026</h1>
-      <p>Luxury • Culture • Nature • Food • Entertainment</p>
+<div class="loader">
+    <div class="loader-circle"></div>
+</div>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">TAMACHI GUIDE</div>
+
+        <div class="nav-links" id="navLinks">
+            <a href="#intro">Area</a>
+            <a href="#places">Places</a>
+            <a href="#food">Food</a>
+            <a href="#lifestyle">Lifestyle</a>
+            <a href="#map">Map</a>
+        </div>
+
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </div>
-  </section>
+</nav>
 
-  <section class="section">
-    <h2 class="section-title">Executive Summary</h2>
+<section class="hero">
+    <div class="hero-content fade-up">
+        <h1>TAMACHI GUIDE</h1>
 
-    <div class="plans">
+        <p>
+            Khám phá khu vực quanh ga Tamachi - nơi giao thoa giữa business và lifestyle tại Tokyo
+        </p>
 
-      <div class="plan-card">
-        <div class="plan-image"
-          style="background-image:url('https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=1400&auto=format&fit=crop')">
+        <div class="hero-buttons">
+            <a href="#places" class="btn btn-primary">Khám phá địa điểm</a>
+            <a href="#map" class="btn btn-secondary">Xem bản đồ</a>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="intro">
+    <div class="fade-up">
+        <h2 class="section-title">Tamachi Vibes</h2>
+        <p class="section-subtitle">
+            Một khu vực cân bằng giữa nhịp sống văn phòng hiện đại và nét local Tokyo đầy tinh tế.
+        </p>
+    </div>
+
+    <div class="intro-grid">
+        <div class="intro-card glass fade-up">
+            <div class="intro-icon">🚆</div>
+            <h3>Di chuyển thuận tiện</h3>
+            <p>Chỉ vài phút đến Shinagawa và dễ dàng kết nối toàn Tokyo bằng JR Yamanote Line.</p>
         </div>
 
-        <div class="plan-content">
-          <div class="tag">Plan 1</div>
-          <h3>Tokyo + Yamanashi</h3>
-
-          <p>
-            Luxury Tokyo experience combined with Mt.Fuji nature retreat.
-          </p>
-
-          <ul class="highlight-list">
-            <li>✔ Helicopter Night Tour</li>
-            <li>✔ teamLab Fine Dining</li>
-            <li>✔ Mt.Fuji Hidden Tour</li>
-            <li>✔ Glamping Resort</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="plan-card">
-        <div class="plan-image"
-          style="background-image:url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=1400&auto=format&fit=crop')">
+        <div class="intro-card glass fade-up">
+            <div class="intro-icon">💻</div>
+            <h3>Khu vực IT & Business</h3>
+            <p>Nơi tập trung nhiều công ty công nghệ, startup và văn phòng quốc tế.</p>
         </div>
 
-        <div class="plan-content">
-          <div class="tag">Plan 2</div>
-          <h3>Tokyo + Sendai</h3>
-
-          <p>
-            Modern Tokyo meets authentic Tohoku local culture.
-          </p>
-
-          <ul class="highlight-list">
-            <li>✔ Ginzan Onsen</li>
-            <li>✔ Matsushima Bay</li>
-            <li>✔ Tokyo Kart</li>
-            <li>✔ Ryokan Stay</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="plan-card">
-        <div class="plan-image"
-          style="background-image:url('https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=80&w=1400&auto=format&fit=crop')">
+        <div class="intro-card glass fade-up">
+            <div class="intro-icon">🍜</div>
+            <h3>Ẩm thực hấp dẫn</h3>
+            <p>Từ ramen local, izakaya cho tới cafe phong cách Tokyo hiện đại.</p>
         </div>
 
-        <div class="plan-content">
-          <div class="tag">Plan 3</div>
-          <h3>Fukuoka + Hiroshima</h3>
-
-          <p>
-            West Japan food, history and relaxed atmosphere.
-          </p>
-
-          <ul class="highlight-list">
-            <li>✔ Hakata Food Tour</li>
-            <li>✔ Miyajima Island</li>
-            <li>✔ Hiroshima Culture</li>
-            <li>✔ Bay Cruise</li>
-          </ul>
+        <div class="intro-card glass fade-up">
+            <div class="intro-icon">🌃</div>
+            <h3>Business meets Lifestyle</h3>
+            <p>Ban ngày năng động, ban đêm thư giãn với vibe Tokyo đầy ánh đèn.</p>
         </div>
-      </div>
+    </div>
+</section>
+
+<section class="section" id="places">
+    <div class="fade-up">
+        <h2 class="section-title">Popular Spots</h2>
+        <p class="section-subtitle">
+            Những địa điểm đáng ghé quanh ga Tamachi.
+        </p>
+    </div>
+
+    <div class="places-grid">
+
+        <div class="place-card glass fade-up">
+            <div class="place-image">
+                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop">
+            </div>
+            <div class="place-content">
+                <span class="badge">Cafe</span>
+                <h3>Tully’s Coffee Tamachi</h3>
+                <p>Không gian làm việc yên tĩnh với vibe business Tokyo hiện đại.</p>
+                <div class="stars">★★★★★</div>
+                <div class="place-meta">
+                    <span>3 phút từ ga</span>
+                    <button class="btn btn-primary" style="padding:10px 18px;font-size:0.9rem;">View More</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="place-card glass fade-up">
+            <div class="place-image">
+                <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200&auto=format&fit=crop">
+            </div>
+            <div class="place-content">
+                <span class="badge">Work Space</span>
+                <h3>Shibaura House</h3>
+                <p>Creative space cực chill dành cho freelancer và dân văn phòng.</p>
+                <div class="stars">★★★★★</div>
+                <div class="place-meta">
+                    <span>5 phút từ ga</span>
+                    <button class="btn btn-primary" style="padding:10px 18px;font-size:0.9rem;">View More</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="place-card glass fade-up">
+            <div class="place-image">
+                <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1200&auto=format&fit=crop">
+            </div>
+            <div class="place-content">
+                <span class="badge">Lunch</span>
+                <h3>Mita Seimenjo</h3>
+                <p>Tsukemen nổi tiếng với nước dùng đậm vị cực hợp ngày lạnh Tokyo.</p>
+                <div class="stars">★★★★★</div>
+                <div class="place-meta">
+                    <span>6 phút từ ga</span>
+                    <button class="btn btn-primary" style="padding:10px 18px;font-size:0.9rem;">View More</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="place-card glass fade-up">
+            <div class="place-image">
+                <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=1200&auto=format&fit=crop">
+            </div>
+            <div class="place-content">
+                <span class="badge">Cafe</span>
+                <h3>Starbucks MSB Tamachi</h3>
+                <p>View city cực đẹp, phù hợp làm việc hoặc họp nhanh.</p>
+                <div class="stars">★★★★☆</div>
+                <div class="place-meta">
+                    <span>2 phút từ ga</span>
+                    <button class="btn btn-primary" style="padding:10px 18px;font-size:0.9rem;">View More</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="place-card glass fade-up">
+            <div class="place-image">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop">
+            </div>
+            <div class="place-content">
+                <span class="badge">Izakaya</span>
+                <h3>Tokyo Ramen Style Spot</h3>
+                <p>Quán ramen & izakaya local với vibe salaryman Tokyo chân thật.</p>
+                <div class="stars">★★★★★</div>
+                <div class="place-meta">
+                    <span>4 phút từ ga</span>
+                    <button class="btn btn-primary" style="padding:10px 18px;font-size:0.9rem;">View More</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="place-card glass fade-up">
+            <div class="place-image">
+                <img src="https://images.unsplash.com/photo-1604719312566-8912e9c8a213?q=80&w=1200&auto=format&fit=crop">
+            </div>
+            <div class="place-content">
+                <span class="badge">Convenience</span>
+                <h3>FamilyMart & Lawson</h3>
+                <p>Không thể thiếu trong cuộc sống office worker tại Tamachi.</p>
+                <div class="stars">★★★★☆</div>
+                <div class="place-meta">
+                    <span>1 phút từ ga</span>
+                    <button class="btn btn-primary" style="padding:10px 18px;font-size:0.9rem;">View More</button>
+                </div>
+            </div>
+        </div>
 
     </div>
-  </section>
+</section>
 
-  <section class="section">
-    <h2 class="section-title">Plan 1 Timeline</h2>
+<section class="section" id="food">
+    <div class="fade-up">
+        <h2 class="section-title">Best Food Around Tamachi</h2>
+        <p class="section-subtitle">
+            Những món ăn khiến dân văn phòng Tokyo mê mẩn.
+        </p>
+    </div>
+
+    <div class="food-scroll">
+
+        <div class="food-card fade-up">
+            <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=1200&auto=format&fit=crop">
+            <div class="food-overlay">
+                <h3>Tokyo Style Ramen</h3>
+                <div class="food-tags">
+                    <span>Ramen</span>
+                    <span>Local</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="food-card fade-up">
+            <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1200&auto=format&fit=crop">
+            <div class="food-overlay">
+                <h3>Fresh Sushi Lunch</h3>
+                <div class="food-tags">
+                    <span>Sushi</span>
+                    <span>Lunch</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="food-card fade-up">
+            <img src="https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?q=80&w=1200&auto=format&fit=crop">
+            <div class="food-overlay">
+                <h3>Japanese Teishoku</h3>
+                <div class="food-tags">
+                    <span>Teishoku</span>
+                    <span>Healthy</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="food-card fade-up">
+            <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=1200&auto=format&fit=crop">
+            <div class="food-overlay">
+                <h3>Tokyo Night Izakaya</h3>
+                <div class="food-tags">
+                    <span>Izakaya</span>
+                    <span>Night</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="section" id="lifestyle">
+    <div class="fade-up">
+        <h2 class="section-title">Work & Lifestyle</h2>
+        <p class="section-subtitle">
+            Cuộc sống cân bằng giữa công việc và thư giãn tại Tamachi.
+        </p>
+    </div>
+
+    <div class="magazine">
+
+        <div class="mag-left">
+
+            <div class="mag-card fade-up">
+                <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1600&auto=format&fit=crop">
+                <div class="mag-overlay">
+                    <h3>Modern Coworking Spaces</h3>
+                    <p>Không gian mở dành cho startup, freelancer và team IT.</p>
+                </div>
+            </div>
+
+            <div class="mag-card fade-up">
+                <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1600&auto=format&fit=crop">
+                <div class="mag-overlay">
+                    <h3>Tokyo Night Walk</h3>
+                    <p>Ánh đèn và vibe thành phố khiến Tamachi rất khác về đêm.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mag-right">
+
+            <div class="mag-card fade-up">
+                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1200&auto=format&fit=crop">
+                <div class="mag-overlay">
+                    <h3>Gym & Wellness</h3>
+                </div>
+            </div>
+
+            <div class="mag-card fade-up">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop">
+                <div class="mag-overlay">
+                    <h3>Urban Chill Spots</h3>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="section" id="map">
+    <div class="fade-up">
+        <h2 class="section-title">Tamachi Area Map</h2>
+        <p class="section-subtitle">
+            Các địa điểm nổi bật quanh ga Tamachi.
+        </p>
+    </div>
+
+    <div class="map-box glass fade-up">
+        <div class="fake-map">
+            <div class="map-grid"></div>
+
+            <div class="pin" style="top:20%;left:25%;"></div>
+            <div class="pin" style="top:40%;left:50%;"></div>
+            <div class="pin" style="top:65%;left:35%;"></div>
+            <div class="pin" style="top:50%;left:75%;"></div>
+            <div class="pin" style="top:30%;left:65%;"></div>
+
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="fade-up">
+        <h2 class="section-title">1 Day In Tamachi</h2>
+        <p class="section-subtitle">
+            Một ngày trải nghiệm khu vực quanh ga Tamachi.
+        </p>
+    </div>
 
     <div class="timeline">
 
-      <div class="day">
-        <h4>Day 1 – Tokyo Luxury Experience</h4>
-        <p>
-          Sumo Experience • teamLab Fine Dining • Helicopter Night Tour
-        </p>
-      </div>
+        <div class="timeline-item fade-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content glass">
+                <h3>☕ Morning Coffee</h3>
+                <p>Bắt đầu ngày mới với latte tại Starbucks MSB Tamachi.</p>
+            </div>
+        </div>
 
-      <div class="day">
-        <h4>Day 2 – Tokyo Entertainment</h4>
-        <p>
-          Axe Throwing Bar • Dinner Cruise • Night Club Experience
-        </p>
-      </div>
+        <div class="timeline-item fade-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content glass">
+                <h3>🍱 Lunch Time</h3>
+                <p>Ăn trưa với ramen hoặc teishoku chuẩn Tokyo.</p>
+            </div>
+        </div>
 
-      <div class="day">
-        <h4>Day 3 – Mt.Fuji Hidden Gems</h4>
-        <p>
-          Aokigahara Forest • Cave Exploration • Glamping Resort
-        </p>
-      </div>
+        <div class="timeline-item fade-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content glass">
+                <h3>🍻 Evening Izakaya</h3>
+                <p>Thư giãn cùng đồng nghiệp sau giờ làm việc.</p>
+            </div>
+        </div>
 
-      <div class="day">
-        <h4>Day 4 – Return Hanoi</h4>
-        <p>
-          Relax Morning • Airport Transfer
-        </p>
-      </div>
+        <div class="timeline-item fade-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content glass">
+                <h3>🌃 Night Walk</h3>
+                <p>Dạo quanh phố đêm Tokyo với ánh đèn city vibe hiện đại.</p>
+            </div>
+        </div>
 
     </div>
-  </section>
+</section>
 
-  <section class="section">
-    <h2 class="section-title">Highlight Experiences</h2>
-
-    <div class="activity-grid">
-
-      <div class="activity-card">
-        <div class="activity-image"
-          style="background-image:url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=1400&auto=format&fit=crop')">
-        </div>
-
-        <div class="activity-content">
-          <h4>Helicopter Night Tour</h4>
-          <p>
-            Private helicopter experience over Tokyo skyline and Rainbow Bridge.
-          </p>
-
-          <div class="price">
-            ~28,000 yen/person
-          </div>
-        </div>
-      </div>
-
-      <div class="activity-card">
-        <div class="activity-image"
-          style="background-image:url('https://images.unsplash.com/photo-1492571350019-22de08371fd3?q=80&w=1400&auto=format&fit=crop')">
-        </div>
-
-        <div class="activity-content">
-          <h4>teamLab Fine Dining</h4>
-          <p>
-            Luxury dining experience combined with immersive digital art.
-          </p>
-
-          <div class="price">
-            ~39,600 yen/person
-          </div>
-        </div>
-      </div>
-
-      <div class="activity-card">
-        <div class="activity-image"
-          style="background-image:url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1400&auto=format&fit=crop')">
-        </div>
-
-        <div class="activity-content">
-          <h4>Mt.Fuji Glamping</h4>
-          <p>
-            Luxury outdoor stay with private onsen and Mt.Fuji view.
-          </p>
-
-          <div class="price">
-            Resort depending
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="section">
-    <h2 class="section-title">Plan Comparison</h2>
-
-    <div class="comparison">
-
-      <table>
-        <tr>
-          <th>Criteria</th>
-          <th>Plan 1</th>
-          <th>Plan 2</th>
-          <th>Plan 3</th>
-        </tr>
-
-        <tr>
-          <td>Luxury</td>
-          <td>★★★★★</td>
-          <td>★★★★☆</td>
-          <td>★★★☆☆</td>
-        </tr>
-
-        <tr>
-          <td>Nature</td>
-          <td>★★★★★</td>
-          <td>★★★★☆</td>
-          <td>★★★☆☆</td>
-        </tr>
-
-        <tr>
-          <td>Food Experience</td>
-          <td>★★★★☆</td>
-          <td>★★★★☆</td>
-          <td>★★★★★</td>
-        </tr>
-
-        <tr>
-          <td>Traditional Culture</td>
-          <td>★★★☆☆</td>
-          <td>★★★★★</td>
-          <td>★★★★☆</td>
-        </tr>
-
-        <tr>
-          <td>Entertainment</td>
-          <td>★★★★★</td>
-          <td>★★★☆☆</td>
-          <td>★★★☆☆</td>
-        </tr>
-
-      </table>
-
+<footer>
+    <div class="socials">
+        <a href="#">✕</a>
+        <a href="#">📷</a>
+        <a href="#">🌐</a>
     </div>
 
-    <div class="recommend">
-      <h2>Recommendation</h2>
+    <p>Made with ❤️ in Tokyo</p>
+</footer>
 
-      <p>
-        If the priority is luxury and impressive VIP experience, Plan 1 is highly recommended.
-        <br><br>
-        If the priority is authentic Japanese culture and relaxing travel, Plan 2 is ideal.
-        <br><br>
-        If the priority is food culture and relaxed atmosphere, Plan 3 offers the best balance.
-      </p>
-    </div>
+<script>
 
-  </section>
+/* LOADER */
 
-  <footer>
-    Japan Experience Proposal © 2026
-  </footer>
+window.addEventListener('load', () => {
+    document.querySelector('.loader').classList.add('hidden');
+});
+
+/* MOBILE MENU */
+
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+
+menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+});
+
+/* FADE UP */
+
+const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting){
+            entry.target.classList.add('active');
+        }
+    });
+},{
+    threshold:0.1
+});
+
+document.querySelectorAll('.fade-up').forEach((el)=>{
+    observer.observe(el);
+});
+
+</script>
 
 </body>
 </html>
